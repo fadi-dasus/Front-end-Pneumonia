@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import Home from "./Home";
-import Profile from "./Profile";
-import Nav from "./Nav";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import Nav from "./common/Nav";
 import Auth from "./Auth/Auth";
-import Callback from "./Callback";
-import Public from "./Public";
-import Private from "./Private";
-import sea from './assets/sea.jpeg';
+import Callback from "./Auth/Callback";
+import Public from "./components/Public";
+import Private from "./components/Private";
+import sea from './assets/brain.jpeg';
 
 class App extends Component {
   constructor(props) {
