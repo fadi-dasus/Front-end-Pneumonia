@@ -7,7 +7,8 @@ import Auth from "./Auth/Auth";
 import Callback from "./Auth/Callback";
 import Public from "./components/Public";
 import Private from "./components/Private";
-import sea from './assets/brain.jpeg';
+import brain from './assets/brain.jpeg';
+import UploadPage from './components/UploadPage'
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <div className="jumbotron" style={{ backgroundImage: "url(" + sea + ")", height: '100%', position: 'absolute', width: '100%' }}   >
+        <div className="jumbotron" style={{ backgroundImage: "url(" + brain + ")", height: '100%', position: 'absolute', width: '100%' }}   >
 
           <Nav auth={this.auth} />
           <div className="body">
@@ -51,6 +52,8 @@ class App extends Component {
                   )
               }
             />
+            <Route path="/upload" component={UploadPage} />
+
           </div>
         </div>
       </>

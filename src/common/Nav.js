@@ -20,8 +20,12 @@ class Nav extends Component {
             <li>
               <Link to="/private">Private</Link>
             </li>
+
           )}
           <li>
+            <li>
+              <Link to="/upload">Detect Pneumonia</Link>
+            </li>
             <button onClick={isAuthenticated() ? logout : login}>
               {isAuthenticated() ? "Log Out" : "Log In"}
             </button>
