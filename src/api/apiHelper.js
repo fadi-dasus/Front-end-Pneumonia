@@ -1,4 +1,4 @@
-import { handleError, handlePostResponse } from './httpHelper.js'
+import { handleError, handleResponse } from './httpHelper.js'
 
 export const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
 
@@ -12,7 +12,7 @@ export function saveImage(image) {
             physicalPath: image.name,
             status: image.initialDiagnosis
         })
-    }).then(handlePostResponse)
+    }).then(handleResponse)
         .catch(handleError);
 }
 
@@ -23,7 +23,7 @@ export function uploadImage(data) {
     fetch(imageUploadURL, {
         method: "POST",
         body: data
-    }).then(handlePostResponse)
+    }).then(handleResponse)
         .catch(handleError);
 }
 
