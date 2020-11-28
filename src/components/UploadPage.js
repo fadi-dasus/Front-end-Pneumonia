@@ -4,7 +4,7 @@ import { uploadImage, saveImage } from '../api/apiHelper'
 
 
 
-function UploadPage() {
+function UploadPage(props) {
   const [initialDiagnosis, setInitialDiagnosis] = useState("");
   const [file, setFile] = useState(null);
 
@@ -12,8 +12,8 @@ function UploadPage() {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
-    uploadImage(formData);
-    saveImage({ initialDiagnosis, name: file.name })
+    //  uploadImage(formData);
+    saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())
 
     // connect()
   }

@@ -1,13 +1,15 @@
 import { handleError, handleResponse } from './httpHelper.js'
 
-export const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
 
 const imageUploadURL = 'http://localhost:8080/uploadFile'
 
-export function saveImage(image) {
-    fetch(urlSubmit, {
+export function saveImage(image, token) {
+    fetch('/postImage', {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({
             physicalPath: image.name,
             status: image.initialDiagnosis

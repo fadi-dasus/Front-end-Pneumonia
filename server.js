@@ -3,6 +3,9 @@ require("dotenv").config();
 const jwt = require("express-jwt"); // Validate JWT and set req.user
 const jwksRsa = require("jwks-rsa"); // Retrieve RSA keys from a JSON Web Key set (JWKS) endpoint
 const fetch = require("node-fetch");
+const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 const checkJwt = jwt({
   // Dynamically provide a signing key based on the kid in the header
@@ -23,7 +26,6 @@ const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 
-const app = express();
 
 app.get("/private", checkJwt, function (req, res) {
   saveImage('HI').then(
@@ -34,7 +36,16 @@ app.get("/private", checkJwt, function (req, res) {
 });
 
 
-// const imageUploadURL = 'http://localhost:8080/uploadFile'
+app.post("/postImage", checkJwt, function (req, res) {
+  console.log('/////////')
+  console.log(req.body)
+  console.log('/////////')
+
+  saveImage(req.body).then(
+    res.status(201).send()
+  )
+});
+
 const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
 
 
@@ -42,24 +53,24 @@ const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
 function saveImage(image) {
   console.log('hello from the message')
   return fetch(urlSubmit, {
-
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      physicalPath: 'name',
-      status: 'Normal'
+      physicalPath: image.name,
+      status: image.initialDiagnosis
     })
   }).then(handleResponse)
     .catch(handleError);
 }
 
+// const imageUploadURL = 'http://localhost:8080/uploadFile'
 
-//  function uploadImage(data) {
+// function uploadImage(data) {
 //   fetch(imageUploadURL, {
-//       method: "POST",
-//       body: data
+//     method: "POST",
+//     body: data
 //   }).then(handleResponse)
-//       .catch(handleError);
+//     .catch(handleError);
 // }
 
 async function handleResponse(response) {

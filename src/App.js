@@ -50,7 +50,16 @@ class App extends Component {
                   )
               }
             />
-            <Route path="/upload" component={UploadPage} />
+            <Route path="/upload"
+              render={props =>
+                this.auth.isAuthenticated() ? (
+                  <UploadPage auth={this.auth} {...props} />
+                ) : (
+                    this.auth.login()
+                  )
+              }
+
+            />
 
           </div>
         </div>
