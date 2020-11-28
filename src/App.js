@@ -21,7 +21,7 @@ class App extends Component {
     return (
       <>
         <div className="jumbotron" style={{ backgroundImage: "url(" + brain + ")", height: '100%', position: 'absolute', width: '100%' }}   >
-          <ToastContainer autoClose={3000} hideProgressBar />
+          <ToastContainer autoClose={3000} />
 
           <Nav auth={this.auth} />
           <div className="body">

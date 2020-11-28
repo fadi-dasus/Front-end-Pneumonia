@@ -13,9 +13,9 @@ function UploadPage(props) {
     Promise.all([uploadImage(formData, props.auth.getAccessToken())
       , saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())])
       .then(
-        toast.success('image has been uploaded please wait for the result')
+        toast.success('uploading please wait....')
       ).catch(e => {
-        console.log('error')
+        toast.error('error')
       })
 
   }
@@ -29,7 +29,7 @@ function UploadPage(props) {
           onChange={(e) => { setInitialDiagnosis(e.target.value) }}
           placeholder="Initial Diagnosis" />
         <input type="file" name="file" onChange={(e) => setFile(e.target.files[0])} />
-        <input type="button" value="Upload" onClick={uploadWithFormData} className="btn btn-primary" />
+        <input type="button" value="Upload" onClick={uploadWithFormData} />
       </form>
     </div>
   );
