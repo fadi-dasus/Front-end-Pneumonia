@@ -13,11 +13,6 @@ class Nav extends Component {
           <li>
             <Link to="/profile">Profile</Link>
           </li>
-          {isAuthenticated() && (
-            <li>
-              <Link to="/private">Private</Link>
-            </li>
-          )}
           <li>
           </li>
           {isAuthenticated() && (

@@ -5,7 +5,6 @@ import Profile from "./components/Profile";
 import Nav from "./common/Nav";
 import Auth from "./Auth/Auth";
 import Callback from "./Auth/Callback";
-import Private from "./components/Private";
 import brain from './assets/brain.jpeg';
 import UploadPage from './components/UploadPage'
 
@@ -40,16 +39,7 @@ class App extends Component {
                   )
               }
             />
-            <Route
-              path="/private"
-              render={props =>
-                this.auth.isAuthenticated() ? (
-                  <Private auth={this.auth} {...props} />
-                ) : (
-                    this.auth.login()
-                  )
-              }
-            />
+
             <Route path="/upload"
               render={props =>
                 this.auth.isAuthenticated() ? (
