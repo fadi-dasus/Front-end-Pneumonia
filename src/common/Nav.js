@@ -5,7 +5,7 @@ class Nav extends Component {
   render() {
     const { isAuthenticated, login, logout } = this.props.auth;
     return (
-      <nav>
+      <nav >
         <ul>
           <li>
             <Link to="/">Home</Link>

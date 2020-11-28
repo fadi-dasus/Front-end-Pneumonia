@@ -6,6 +6,7 @@
     "auth0-js": "^9.8.0",
     "auth0-lock": "^11.10.0",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
     "express": "^4.16.3",
     "express-formidable": "^1.2.0",
     "express-jwt": "^5.3.1",
@@ -17,7 +18,8 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.4"
+    "react-scripts": "2.0.4",
+    "react-toastify": "^5.1.1"
   },
   "scripts": {
     "start": "run-p start:client start:server",

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { uploadImage, saveImage } from '../api/apiHelper'
-
-
-
 
 function UploadPage(props) {
   const [initialDiagnosis, setInitialDiagnosis] = useState("");
@@ -12,11 +10,14 @@ function UploadPage(props) {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
-    // make sure to wait for both promises and then show a toast
-    uploadImage(formData, props.auth.getAccessToken());
-    saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())
+    Promise.all([uploadImage(formData, props.auth.getAccessToken())
+      , saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())])
+      .then(
+        toast.success('image has been uploaded please wait for the result')
+      ).catch(e => {
+        console.log('error')
+      })
 
-    // connect()
   }
 
 

@@ -47,14 +47,9 @@ app.post("/upload", checkJwt, upload.any(), (req, res) => {
 
   const formFile = new FormData();
   formFile.append('file', buffer, { filename });
-  try {
-    uploadImage(formFile)
-    res.status(201).send()
 
-  } catch (error) {
-    res.status(412).send()
-
-  }
+  uploadImage(formFile).then(res.status(201).send())
+    .catch(res.status(500).send());
 
 });
 
@@ -63,19 +58,18 @@ function saveImage(image) {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      physicalPath: image.name,
-      status: image.initialDiagnosis
+      physicalPath: image.physicalPath,
+      status: image.status
     })
   }).then(handleResponse)
     .catch(handleError);
 }
 
 function uploadImage(data) {
-  fetch(imageUploadURL, {
+  return fetch(imageUploadURL, {
     method: "POST",
     body: data
-  }).then(handleResponse)
-    .catch(handleError);
+  })
 }
 
 async function handleResponse(response) {

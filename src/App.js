@@ -7,6 +7,10 @@ import Auth from "./Auth/Auth";
 import Callback from "./Auth/Callback";
 import brain from './assets/brain.jpeg';
 import UploadPage from './components/UploadPage'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +21,7 @@ class App extends Component {
     return (
       <>
         <div className="jumbotron" style={{ backgroundImage: "url(" + brain + ")", height: '100%', position: 'absolute', width: '100%' }}   >
+          <ToastContainer autoClose={3000} hideProgressBar />
 
           <Nav auth={this.auth} />
           <div className="body">
