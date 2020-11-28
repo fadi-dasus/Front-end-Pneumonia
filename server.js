@@ -7,9 +7,10 @@ const jwksRsa = require("jwks-rsa"); // Retrieve RSA keys from a JSON Web Key se
 const fetch = require("node-fetch");
 const app = express();
 const bodyParser = require('body-parser');
-
 var FormData = require('form-data');
 
+const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
+const imageUploadURL = 'http://localhost:8080/uploadFile'
 
 app.use(
   bodyParser.urlencoded({
@@ -19,8 +20,6 @@ app.use(
 )
 
 const checkJwt = jwt({
-  // Dynamically provide a signing key based on the kid in the header
-  // and the signing keys provided by the JWKS endpoint.
   secret: jwksRsa.expressJwtSecret({
     cache: true, // cache the signing key
     rateLimit: true,
@@ -32,20 +31,8 @@ const checkJwt = jwt({
   // Validate the audience and the issuer.
   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
   issuer: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/`,
-
-  // This must match the algorithm selected in the Auth0 dashboard under your app's advanced settings under the OAuth tab
   algorithms: ["RS256"]
 });
-
-
-app.get("/private", checkJwt, function (req, res) {
-  saveImage('HI').then(
-    res.json({
-      message: "Hello from a private API!"
-    })
-  )
-});
-
 
 app.post("/postImage", checkJwt, function (req, res) {
   saveImage(req.body).then(
@@ -69,14 +56,7 @@ app.post("/upload", checkJwt, upload.any(), (req, res) => {
 
   }
 
-
 });
-
-
-
-const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
-
-
 
 function saveImage(image) {
   return fetch(urlSubmit, {
@@ -90,8 +70,6 @@ function saveImage(image) {
     .catch(handleError);
 }
 
-const imageUploadURL = 'http://localhost:8080/uploadFile'
-
 function uploadImage(data) {
   fetch(imageUploadURL, {
     method: "POST",
@@ -99,7 +77,6 @@ function uploadImage(data) {
   }).then(handleResponse)
     .catch(handleError);
 }
-
 
 async function handleResponse(response) {
   if (response.ok) return response.text();
@@ -114,12 +91,6 @@ function handleError(error) {
   console.error("API call failed. " + error);
   throw error;
 }
-
-
-
-
-
-
 
 app.listen(3001);
 console.log("API server listening on " + process.env.REACT_APP_AUTH0_AUDIENCE);
