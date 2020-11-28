@@ -12,7 +12,8 @@ function UploadPage(props) {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
-    //  uploadImage(formData);
+    // make sure to wait for both promises and then show a toast
+    uploadImage(formData, props.auth.getAccessToken());
     saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())
 
     // connect()

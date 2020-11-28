@@ -1,7 +1,6 @@
 import { handleError, handleResponse } from './httpHelper.js'
 
 
-const imageUploadURL = 'http://localhost:8080/uploadFile'
 
 export function saveImage(image, token) {
     fetch('/postImage', {
@@ -20,10 +19,15 @@ export function saveImage(image, token) {
 
 
 
-export function uploadImage(data) {
+export function uploadImage(data, token) {
+
+    debugger
     console.log(data)
-    fetch(imageUploadURL, {
+    fetch('/upload', {
         method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
         body: data
     }).then(handleResponse)
         .catch(handleError);

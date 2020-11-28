@@ -1,11 +1,12 @@
 
 export async function handleResponse(response) {
+
     if (response.ok) return response.text();
     if (response.status === 400) {
         const error = await response.text();
         throw new Error(error);
     }
-    throw new Error("Network response was not created." + response.status);
+    console.log("Network response was not created." + response.status);
 }
 
 export function handleError(error) {

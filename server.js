@@ -1,11 +1,22 @@
 const express = require("express");
+const multer = require('multer');
+const upload = multer();
 require("dotenv").config();
 const jwt = require("express-jwt"); // Validate JWT and set req.user
 const jwksRsa = require("jwks-rsa"); // Retrieve RSA keys from a JSON Web Key set (JWKS) endpoint
 const fetch = require("node-fetch");
 const app = express();
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+
+var FormData = require('form-data');
+
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  }),
+  bodyParser.json(),
+)
 
 const checkJwt = jwt({
   // Dynamically provide a signing key based on the kid in the header
@@ -37,21 +48,37 @@ app.get("/private", checkJwt, function (req, res) {
 
 
 app.post("/postImage", checkJwt, function (req, res) {
-  console.log('/////////')
-  console.log(req.body)
-  console.log('/////////')
-
   saveImage(req.body).then(
     res.status(201).send()
   )
 });
+
+app.post("/upload", checkJwt, upload.any(), (req, res) => {
+  const { headers, files } = req;
+  const { buffer, originalname: filename } = files[0];
+  headers['Content-Type'] = 'multipart/form-data';
+
+  const formFile = new FormData();
+  formFile.append('file', buffer, { filename });
+  try {
+    uploadImage(formFile)
+    res.status(201).send()
+
+  } catch (error) {
+    res.status(412).send()
+
+  }
+
+
+});
+
+
 
 const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
 
 
 
 function saveImage(image) {
-  console.log('hello from the message')
   return fetch(urlSubmit, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -63,15 +90,16 @@ function saveImage(image) {
     .catch(handleError);
 }
 
-// const imageUploadURL = 'http://localhost:8080/uploadFile'
+const imageUploadURL = 'http://localhost:8080/uploadFile'
 
-// function uploadImage(data) {
-//   fetch(imageUploadURL, {
-//     method: "POST",
-//     body: data
-//   }).then(handleResponse)
-//     .catch(handleError);
-// }
+function uploadImage(data) {
+  fetch(imageUploadURL, {
+    method: "POST",
+    body: data
+  }).then(handleResponse)
+    .catch(handleError);
+}
+
 
 async function handleResponse(response) {
   if (response.ok) return response.text();
