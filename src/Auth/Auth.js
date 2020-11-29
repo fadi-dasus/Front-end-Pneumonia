@@ -15,6 +15,7 @@ export default class Auth {
   }
 
   login = () => {
+    debugger
     this.auth0.authorize();
   };
 

@@ -2,7 +2,7 @@
 
 export function saveImage(image, token) {
 
-    fetch('/postImage', {
+    return fetch('/postImage', {
         method: "POST",
         headers: {
             "content-type": "application/json",
@@ -13,15 +13,28 @@ export function saveImage(image, token) {
             status: image.initialDiagnosis
         })
     })
+
+
 }
 
 export function uploadImage(data, token) {
-    fetch('/upload', {
+    return fetch('/upload', {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`
         },
         body: data
+    })
+}
+
+
+export function rigisterQueueListener(nickname, token) {
+    return fetch('/rigisterQueue', {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: nickname
     })
 }
 

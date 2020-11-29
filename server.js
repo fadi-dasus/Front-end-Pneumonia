@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 var FormData = require('form-data');
 
 const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
+const urlNikname = 'http://localhost:8081/bachelor/queue/registerQueue'
+
 const imageUploadURL = 'http://localhost:8080/uploadFile'
 
 app.use(
@@ -52,6 +54,27 @@ app.post("/upload", checkJwt, upload.any(), (req, res) => {
     .catch(res.status(500).send());
 
 });
+
+
+app.post("/rigisterQueue", checkJwt, (req, res) => {
+  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Hello from the server' )
+
+
+  rigisterQueue(req.body).then(res.status(201).send())
+    .catch(res.status(500).send());
+
+});
+
+
+function rigisterQueue(body) {
+  return fetch(urlNikname, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(
+      body.nickname
+    )
+  })
+}
 
 function saveImage(image) {
   return fetch(urlSubmit, {
