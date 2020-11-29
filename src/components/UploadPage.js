@@ -10,13 +10,15 @@ function UploadPage(props) {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
-    Promise.all([uploadImage(formData, props.auth.getAccessToken())
-      , saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())])
-      .then(
-        toast.success('uploading please wait....')
-      ).catch(e => {
-        toast.error('error')
-      })
+    if (file) 
+      Promise.all([uploadImage(formData, props.auth.getAccessToken())
+        , saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())])
+        .then(
+          toast.success('uploading completed please wait for the result')
+        ).catch(e => {
+          toast.error('error')
+        })
+    
 
   }
 
