@@ -6,8 +6,9 @@ const jwt = require("express-jwt"); // Validate JWT and set req.user
 const jwksRsa = require("jwks-rsa"); // Retrieve RSA keys from a JSON Web Key set (JWKS) endpoint
 const fetch = require("node-fetch");
 const app = express();
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 var FormData = require('form-data');
+app.use(express.json())
 
 const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
 const urlNikname = 'http://localhost:8081/bachelor/queue/registerQueue'
@@ -15,10 +16,10 @@ const urlNikname = 'http://localhost:8081/bachelor/queue/registerQueue'
 const imageUploadURL = 'http://localhost:8080/uploadFile'
 
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true
   }),
-  bodyParser.json(),
+  express.json(),
 )
 
 const checkJwt = jwt({
@@ -57,24 +58,30 @@ app.post("/upload", checkJwt, upload.any(), (req, res) => {
 
 
 app.post("/rigisterQueue", checkJwt, (req, res) => {
-  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Hello from the server' )
+  console.log('///////')
+  console.log(JSON.parse(res.body))
+  console.log('///////')
 
-
-  rigisterQueue(req.body).then(res.status(201).send())
-    .catch(res.status(500).send());
+  // rigisterQueue(req.body.nikname).then(res.status(201).send())
+  //   .catch(res.status(500).send());
 
 });
 
 
 function rigisterQueue(body) {
+  console.log(body)
   return fetch(urlNikname, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify(
-      body.nickname
-    )
+    body: JSON.stringify({
+      nikname: body
+
+    })
   })
+
 }
+
+
 
 function saveImage(image) {
   return fetch(urlSubmit, {

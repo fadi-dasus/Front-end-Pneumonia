@@ -28,13 +28,19 @@ export function uploadImage(data, token) {
 }
 
 
-export function rigisterQueueListener(nickname, token) {
+export function rigisterQueueListener(input, token) {
+    debugger
+    console.log('the nikname is ', input)
     return fetch('/rigisterQueue', {
         method: "POST",
         headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
         },
-        body: nickname
+        body: JSON.stringify({
+            nickname: input
+
+        })
     })
 }
 
