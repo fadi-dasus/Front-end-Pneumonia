@@ -1,4 +1,5 @@
 // import { handleError, handleResponse } from './httpHelper.js'
+import { toast } from "react-toastify";
 
 export function saveImage(image, token) {
 
@@ -13,8 +14,11 @@ export function saveImage(image, token) {
             status: image.initialDiagnosis
         })
     })
-
-
+        .then(res => {
+            toast.success('the image is sent to the prediction system wait for the result')
+            console.log(res)
+        })
+        .catch(e => toast.error('error while saving the image'))
 }
 
 export function uploadImage(data, token) {
@@ -27,10 +31,7 @@ export function uploadImage(data, token) {
     })
 }
 
-
 export function rigisterQueueListener(input, token) {
-    debugger
-    console.log('the nikname is ', input)
     return fetch('/rigisterQueue', {
         method: "POST",
         headers: {
@@ -43,5 +44,3 @@ export function rigisterQueueListener(input, token) {
         })
     })
 }
-
-

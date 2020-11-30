@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { uploadImage, saveImage, rigisterQueueListener } from '../api/apiHelper'
+import { uploadImage, saveImage } from '../api/apiHelper'
 
 function UploadPage(props) {
   const [initialDiagnosis, setInitialDiagnosis] = useState();
@@ -10,30 +10,29 @@ function UploadPage(props) {
   useEffect(() => {
     props.auth.getProfile((profile, error) => {
       setNickname(profile.nickname)
-      //.then(listenToTheQueue)
     }
     );
   }, [nickname])
 
-  // alert(nickname)
-
-  function registerUser() {
-    rigisterQueueListener(nickname, props.auth.getAccessToken()).then(
-      toast.success('Registration completed')
-    )
-  }
+  // function registerUser() {
+  //   rigisterQueueListener(nickname, props.auth.getAccessToken()).then(
+  //     toast.success('Registration completed')
+  //   )
+  // }
 
   function uploadWithFormData() {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
     if (file)
-      uploadImage(formData, props.auth.getAccessToken()).then(
+      uploadImage(formData, props.auth.getAccessToken()).then(() => {
+        toast.success('image upload is completed')
         saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())
-          .then(res => toast.success('uploading completed please wait for the result'))
-          .catch(e => toast.error('error while saving the image')))
+      })
         .catch(e => toast.error('error while uploading the image'))
   }
+
+
 
   return (
     <div className="form-group">
@@ -43,7 +42,7 @@ function UploadPage(props) {
           onChange={(e) => { setInitialDiagnosis(e.target.value) }}
           placeholder="Initial Diagnosis" />
         <input type="file" name="file" onChange={(e) => {
-          registerUser()
+
           setFile(e.target.files[0])
         }
         }
