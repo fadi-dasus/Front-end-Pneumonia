@@ -1,6 +1,7 @@
 // import { handleError, handleResponse } from './httpHelper.js'
 import { toast } from "react-toastify";
 
+
 export function saveImage(image, token) {
 
     return fetch('/postImage', {
@@ -13,11 +14,12 @@ export function saveImage(image, token) {
             physicalPath: image.name,
             status: image.initialDiagnosis
         })
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        toast.success('the image is sent to the prediction system wait for the result, your image id is : ' + data.id)
+        console.log(data);
     })
-        .then(res => {
-            toast.success('the image is sent to the prediction system wait for the result')
-            console.log(res)
-        })
         .catch(e => toast.error('error while saving the image'))
 }
 

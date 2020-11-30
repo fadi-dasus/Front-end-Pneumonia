@@ -33,8 +33,11 @@ const checkJwt = jwt({
 });
 
 app.post("/postImage", checkJwt, function (req, res) {
-  saveImage(req.body).then(
-    res.status(201).send()
+  saveImage(req.body).then((body) => {
+    res.status(201)
+    res.send(body)
+  }
+
   )
 });
 
