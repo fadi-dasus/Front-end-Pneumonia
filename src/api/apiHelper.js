@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 
 
 export function saveImage(image, token) {
-
     return fetch('/postImage', {
         method: "POST",
         headers: {
@@ -12,13 +11,13 @@ export function saveImage(image, token) {
         },
         body: JSON.stringify({
             physicalPath: image.name,
-            status: image.initialDiagnosis
+            status: image.initialDiagnosis,
+            issuer: image.issuer
         })
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
         toast.success('the image is sent to the prediction system wait for the result, your image id is : ' + data.id)
-        console.log(data);
     })
         .catch(e => toast.error('error while saving the image'))
 }

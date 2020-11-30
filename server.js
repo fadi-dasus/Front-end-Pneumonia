@@ -49,9 +49,12 @@ app.post("/upload", checkJwt, upload.any(), (req, res) => {
   const formFile = new FormData();
   formFile.append('file', buffer, { filename });
 
-  uploadImage(formFile).then(res.status(201).send())
-    .catch(res.status(500).send());
+  uploadImage(formFile).then((body) => {
+    res.status(201)
+    res.send(body)
 
+
+  })
 });
 
 app.post("/rigisterQueue", checkJwt, (req, res) => {
@@ -73,7 +76,8 @@ function saveImage(image) {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
       physicalPath: image.physicalPath,
-      status: image.status
+      status: image.status,
+      issuer: image.issuer
     })
   }).then(handleResponse)
     .catch(handleError);
@@ -83,7 +87,8 @@ function uploadImage(data) {
   return fetch(imageUploadURL, {
     method: "POST",
     body: data
-  })
+  }).then(handleResponse)
+    .catch(handleError);
 }
 
 async function handleResponse(response) {

@@ -5,30 +5,28 @@ import { uploadImage, saveImage } from '../api/apiHelper'
 function UploadPage(props) {
   const [initialDiagnosis, setInitialDiagnosis] = useState();
   const [file, setFile] = useState(null);
-  const [nickname, setNickname] = useState('')
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
     props.auth.getProfile((profile, error) => {
-      setNickname(profile.nickname)
+      setEmail(profile.email)
     }
     );
-  }, [nickname])
+  }, [email])
 
-  // function registerUser() {
-  //   rigisterQueueListener(nickname, props.auth.getAccessToken()).then(
-  //     toast.success('Registration completed')
-  //   )
-  // }
 
   function uploadWithFormData() {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
     if (file)
-      uploadImage(formData, props.auth.getAccessToken()).then(() => {
-        toast.success('image upload is completed')
-        saveImage({ initialDiagnosis, name: file.name }, props.auth.getAccessToken())
+      uploadImage(formData, props.auth.getAccessToken()).then(function (response) {
+        return response.text();
       })
+        .then((data) => {
+          toast.success('image upload is completed' + data)
+          saveImage({ initialDiagnosis, name: data, issuer: email }, props.auth.getAccessToken())
+        })
         .catch(e => toast.error('error while uploading the image'))
   }
 
