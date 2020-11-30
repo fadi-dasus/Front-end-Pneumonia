@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { uploadImage, saveImage } from '../api/apiHelper'
+import { subscribeToTheQueue } from '../activeMessageQueue/queue'
 
 function UploadPage(props) {
   const [initialDiagnosis, setInitialDiagnosis] = useState();
@@ -26,10 +27,10 @@ function UploadPage(props) {
         .then((data) => {
           toast.success('image upload is completed' + data)
           saveImage({ initialDiagnosis, name: data, issuer: email }, props.auth.getAccessToken())
+          subscribeToTheQueue(email)
         })
         .catch(e => toast.error('error while uploading the image'))
   }
-
 
 
   return (
