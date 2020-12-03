@@ -46,7 +46,7 @@ function UploadPage(props) {
         }
         }
         />
-        <input type="button" value="Upload" onClick={uploadWithFormData} />
+        <input className="btn btn-primary" type="button" value="Upload" onClick={uploadWithFormData} />
       </form>
     </div>
   );
