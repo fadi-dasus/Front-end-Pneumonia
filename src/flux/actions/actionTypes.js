@@ -1,0 +1,5 @@
+
+export const UPLOAD_IMAGE = 'UPLOAD_IMAGE'
+export const BEGIN_API_CALL = 'BEGIN_API_CALL'
+export const API_CALL_ERROR = 'API_CALL_ERROR'
+

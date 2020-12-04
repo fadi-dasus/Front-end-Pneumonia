@@ -106,4 +106,4 @@ function handleError(error) {
 }
 
 app.listen(3001);
-console.log("API server listening on " + process.env.REACT_APP_AUTH0_AUDIENCE);
+console.log("The gateway  server listening on " + process.env.REACT_APP_AUTH0_AUDIENCE);

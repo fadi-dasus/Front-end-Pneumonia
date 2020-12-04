@@ -40,7 +40,7 @@ function UploadPage(props) {
         <input className="form-control mr-sm-2" type="text" value={initialDiagnosis}
           onChange={(e) => { setInitialDiagnosis(e.target.value) }}
           placeholder="Initial Diagnosis" />
-        <input className="file" type="file" name="file" onChange={(e) => {
+        <input className="form-control mr-sm-2" type="file" name="file" onChange={(e) => {
 
           setFile(e.target.files[0])
         }
