@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { msgq } from '../activeMessageQueue/queue'
 class Profile extends Component {
   state = {
     profile: null,
@@ -22,7 +21,6 @@ class Profile extends Component {
     return (
       <>
         <h1>Profile</h1>
-        <button onClick={msgq}>Subscribe to the queue</button>
         <p>{profile.nickname}</p>
         <img
           style={{ maxWidth: 100, maxHeight: 100 }}

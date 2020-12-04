@@ -1,34 +1,19 @@
-import { toast } from "react-toastify";
-
-
-export function msgq() {
-    let ws = new WebSocket('ws://localhost:61614', 'stomp')
-
-    ws.onopen = () => {
-        ws.send('CONNECT\n\n\0')
-
-        ws.send('SUBSCRIBE\ndestination:img\n\nack:auto\n\n\0')
-    }
-
-    ws.onmessage = (e) => {
-        if (e.data.startsWith(''))
-            console.log(e.data)
-    }
-}
-
-
+import { ImageReceived } from '../flux/actions/actionCreator'
 export function subscribeToTheQueue(email) {
     let ws = new WebSocket('ws://localhost:61614', 'stomp')
-
-    console.log('SUBSCRIBE\ndestination:' + email + '\n\nack:auto\n\n\0')
     ws.onopen = () => {
         ws.send('CONNECT\n\n\0')
         ws.send('SUBSCRIBE\ndestination:' + email + '\n\nack:auto\n\n\0')
     }
+    extractData(ws)
+}
+function extractData(ws) {
 
     ws.onmessage = (e) => {
-        if (e.data.startsWith(''))
-            alert(e.data)
-        console.log(e.data)
+        if (e.data.startsWith('MESSAGE')) {
+            // eslint-disable-next-line no-new-func
+            const data = new Function("", "return " + e.data.match(/{[^}]*}/)[0])()
+            ImageReceived(data)
+        }
     }
 }

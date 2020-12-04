@@ -2,21 +2,33 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { uploadImage, saveImage } from '../api/apiHelper'
 import { subscribeToTheQueue } from '../activeMessageQueue/queue'
+import imagesStore from '../flux/store/imageStore'
+import Form from './reusableComponents/Form'
+import ImageList from './reusableComponents/ImageList'
 
 function UploadPage(props) {
   const [initialDiagnosis, setInitialDiagnosis] = useState();
   const [file, setFile] = useState(null);
   const [email, setEmail] = useState('')
+  const [images, setImages] = useState([])
 
   useEffect(() => {
-    props.auth.getProfile((profile, error) => {
-      setEmail(profile.email)
-    }
-    );
+    props.auth.getProfile((profile, error) => { setEmail(profile.email) });
   }, [email])
 
+  useEffect(() => {
+    imagesStore.addChangeListener(onChange)
+    if (images.length === 0)
+      setImages(imagesStore.getImages())
+    return () => imagesStore.removeChangeListener(onChange)
 
-  function uploadWithFormData() {
+  }, [images])
+
+  function onChange() {
+    setImages(imagesStore.getImages())
+  }
+
+  function uploadFormData() {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
@@ -27,28 +39,28 @@ function UploadPage(props) {
         .then((data) => {
           toast.success('image upload is completed' + data)
           saveImage({ initialDiagnosis, name: data, issuer: email }, props.auth.getAccessToken())
+        }).then(() => {
           subscribeToTheQueue(email)
-        })
+        }
+        )
         .catch(e => toast.error('error while uploading the image'))
   }
 
 
+  function initialDiagnosisChangeHandler(e) {
+    setInitialDiagnosis(e.target.value)
+  }
+  function fileChangeHandler(e) {
+    setFile(e.target.files[0])
+  }
+
+
   return (
-
-    <div className="form-group">
-      <form className='form-inline'>
-        <input className="form-control mr-sm-2" type="text" value={initialDiagnosis}
-          onChange={(e) => { setInitialDiagnosis(e.target.value) }}
-          placeholder="Initial Diagnosis" />
-        <input className="form-control mr-sm-2" type="file" name="file" onChange={(e) => {
-
-          setFile(e.target.files[0])
-        }
-        }
-        />
-        <input className="btn btn-primary" type="button" value="Upload" onClick={uploadWithFormData} />
-      </form>
-    </div>
+    <>
+      <Form onInitialDiagnosisChange={initialDiagnosisChangeHandler} onFileChangeChange={fileChangeHandler}
+        initialDiagnosisValue={initialDiagnosis} uploadFormData={uploadFormData} />
+      <ImageList data={images} />
+    </>
   );
 
 }
