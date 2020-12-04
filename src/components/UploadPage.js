@@ -34,13 +34,13 @@ function UploadPage(props) {
 
 
   return (
+
     <div className="form-group">
-      <h2>Upload Form</h2>
       <form className='form-inline'>
-        <input type="text" value={initialDiagnosis}
+        <input className="form-control mr-sm-2" type="text" value={initialDiagnosis}
           onChange={(e) => { setInitialDiagnosis(e.target.value) }}
           placeholder="Initial Diagnosis" />
-        <input type="file" name="file" onChange={(e) => {
+        <input className="form-control mr-sm-2" type="file" name="file" placeholder="Initial Diagnosis" style = {{display: 'none'}} onChange={(e) => {
 
           setFile(e.target.files[0])
         }
