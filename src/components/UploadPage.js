@@ -5,12 +5,15 @@ import { subscribeToTheQueue } from '../activeMessageQueue/queue'
 import imagesStore from '../flux/store/imageStore'
 import Form from './reusableComponents/Form'
 import ImageList from './reusableComponents/ImageList'
+import { useRefresh } from 'react-tidy'
 
 function UploadPage(props) {
+  const refresh = useRefresh()
+
   const [initialDiagnosis, setInitialDiagnosis] = useState();
   const [file, setFile] = useState(null);
   const [email, setEmail] = useState('')
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState(imagesStore.getImages())
 
   useEffect(() => {
     props.auth.getProfile((profile, error) => { setEmail(profile.email) });
@@ -26,6 +29,7 @@ function UploadPage(props) {
 
   function onChange() {
     setImages(imagesStore.getImages())
+    refresh()
   }
 
   function uploadFormData() {
