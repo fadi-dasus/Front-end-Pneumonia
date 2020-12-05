@@ -7,13 +7,12 @@ class Home extends Component {
     const { isAuthenticated, login } = this.props.auth;
     return (
       <div>
-        {/* <button className={styles.button} >Test CSS</button> */}
 
         {isAuthenticated() ? (
           <Link to="/profile">View profile</Link>
         ) : (
             <button className={styles.button} onClick={login}>Log In</button>
-          )}    
+          )}
       </div>
     );
   }
