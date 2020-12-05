@@ -24,7 +24,8 @@ function ImageList(props) {
                             return (
                                 <tr key={shortid.generate()}>
                                     <td >{item.id} </td>
-                                    <td >{item.physicalPath} </td>
+                                    <td >{item.physicalPath.substring(item.physicalPath.lastIndexOf("\\") + 1, item.physicalPath.lastIndexOf(".jpeg"))
+                                    } </td>
                                     <td>{item.status} </td>
                                 </tr>
                             )

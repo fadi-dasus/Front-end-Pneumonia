@@ -13,6 +13,10 @@ function extractData(ws) {
         if (e.data.startsWith('MESSAGE')) {
             // eslint-disable-next-line no-new-func
             const data = new Function("", "return " + e.data.match(/{[^}]*}/)[0])()
+            console.log('//////////')
+            console.log(data.physicalPath.substring(data.physicalPath.lastIndexOf("\\") + 1, data.physicalPath.lastIndexOf(".jpeg")))
+            console.log('//////////')
+
             ImageReceived(data)
         }
     }
