@@ -1,5 +1,7 @@
+import { toast } from 'react-toastify'
 import { ImageReceived } from '../flux/actions/actionCreator'
 export function subscribeToTheQueue(email) {
+    toast.success('subscribed to the queue successfully')
     let ws = new WebSocket('ws://localhost:61614', 'stomp')
     ws.onopen = () => {
         ws.send('CONNECT\n\n\0')
@@ -13,10 +15,6 @@ function extractData(ws) {
         if (e.data.startsWith('MESSAGE')) {
             // eslint-disable-next-line no-new-func
             const data = new Function("", "return " + e.data.match(/{[^}]*}/)[0])()
-            console.log('//////////')
-            console.log(data.physicalPath.substring(data.physicalPath.lastIndexOf("\\") + 1, data.physicalPath.lastIndexOf(".jpeg")))
-            console.log('//////////')
-
             ImageReceived(data)
         }
     }

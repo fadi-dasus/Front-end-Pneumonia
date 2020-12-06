@@ -17,14 +17,18 @@ function UploadPage(props) {
 
   useEffect(() => {
     props.auth.getProfile((profile, error) => { setEmail(profile.email) });
+    subscribeToTheQueue(email)
   }, [email])
 
   useEffect(() => {
     imagesStore.addChangeListener(onChange)
     if (images.length === 0)
       setImages(imagesStore.getImages())
-    return () => imagesStore.removeChangeListener(onChange)
+    return () => {
+      //clean up
+      imagesStore.removeChangeListener(onChange)
 
+    }
   }, [images])
 
   function onChange() {
@@ -32,22 +36,27 @@ function UploadPage(props) {
     refresh()
   }
 
-  function uploadFormData() {
+  async function uploadFormData() {
     const formData = new FormData();
     formData.append("initialDiagnosis", initialDiagnosis);
     formData.append("file", file);
     if (file)
-      uploadImage(formData, props.auth.getAccessToken()).then(function (response) {
-        return response.text();
-      })
-        .then((data) => {
-          toast.success('image upload is completed' + data)
-          saveImage({ initialDiagnosis, name: data, issuer: email }, props.auth.getAccessToken())
-        }).then(() => {
-          subscribeToTheQueue(email)
-        }
-        )
-        .catch(e => toast.error('error while uploading the image'))
+      handleUploadImage(formData)
+        .then((data) => handleSaveImage(data))
+        .catch((e) => toast.error(e))
+
+  }
+
+  function handleSaveImage(data) {
+    debugger
+    saveImage({ initialDiagnosis, name: data, issuer: email }, props.auth.getAccessToken())
+  }
+
+  function handleUploadImage(formData) {
+    return uploadImage(formData, props.auth.getAccessToken()).then(function (response) {
+      toast.success('image upload is completed')
+      return response.text();
+    })
   }
 
 
