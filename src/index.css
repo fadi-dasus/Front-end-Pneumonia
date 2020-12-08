@@ -82,15 +82,19 @@ height: 100px;
 }
 .col-md-3.col-lg-4.col-xl-3.mb-4 {
   padding-top: 15px;
+  color: white;
 }
 .col-md-2.col-lg-2.col-xl-2.mb-4{
   padding-top: 15px;
+  color: white;
 }
 .col-md-3.col-lg-2.col-xl-2.mb-4{
   padding-top: 15px;
+  color: white;
 }
 .col-md-4.col-lg-3.col-xl-3.mb-4{
   padding-top: 15px;
+  color: white;
 }
 .mt-5, .my-5 {
   margin-top: 0rem!important;
@@ -100,4 +104,11 @@ height: 100px;
 }
 .mt-3, .my-3 {
   margin-top: 0rem!important;
+}
+.row {
+  margin-right: -319px;
+  margin-left: 30px;
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+  color: white;
 }
