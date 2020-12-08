@@ -5,37 +5,28 @@ import * as actionTypes from '../actions/actionTypes'
 
 const CHANGE_EVENT = 'change'
 let _images = []
-
 class ImageStore extends EventEmitter {
 
     addChangeListener(callback) {
         this.on(CHANGE_EVENT, callback)
     }
-
     removeChangeListener(callback) {
         this.removeListener(CHANGE_EVENT, callback)
     }
-
     emitChange() {
         this.emit(CHANGE_EVENT)
     }
-
     getImages() {
         return _images
     }
-
 }
 const imageStore = new ImageStore()
-
 dispatcher.register(action => {
-
     switch (action.actionType) {
-
-        case actionTypes.UPLOAD_IMAGE:
+        case actionTypes.IMAGE_RECEIVED:
             _images.push(action.image)
             imageStore.emitChange()
             break
-
         default:
             break
     }

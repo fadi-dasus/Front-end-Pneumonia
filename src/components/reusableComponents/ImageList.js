@@ -1,6 +1,5 @@
 import React from 'react'
 import tableLung from '../../assets/tableLung.jpg';
-import shortid from 'shortid';
 
 function ImageList(props) {
 
@@ -22,7 +21,7 @@ function ImageList(props) {
                     <tbody>
                         {props.data.map((item) => {
                             return (
-                                <tr key={shortid.generate()}>
+                                <tr key={item.id}>
                                     <td >{item.id} </td>
                                     <td >{item.physicalPath.substring(item.physicalPath.lastIndexOf("\\") + 1, item.physicalPath.lastIndexOf(".jpeg"))
                                     } </td>

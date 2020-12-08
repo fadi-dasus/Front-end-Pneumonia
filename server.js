@@ -9,9 +9,6 @@ const app = express();
 var FormData = require('form-data');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-// const bodyParser = require('body-parser');
-
-
 
 const urlSubmit = 'http://localhost:8081/bachelor/image/saubmitImage'
 const urlNikname = 'http://localhost:8081/bachelor/queue/registerQueue'
@@ -105,5 +102,5 @@ function handleError(error) {
   throw error;
 }
 
-app.listen(3001);
+ app.listen(3001);
 console.log("The gateway  server listening on " + process.env.REACT_APP_AUTH0_AUDIENCE);
