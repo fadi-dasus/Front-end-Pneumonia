@@ -10,6 +10,10 @@ import UploadPage from './components/UploadPage'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFoundPage from './components/pages/NotFoundPage'
+import Footer from './common/Footer'
+import './index.css'
+import Carousel from './common/carousal'
+// import { Carousel } from "react-responsive-carousel";
 
 
 
@@ -22,10 +26,12 @@ class App extends Component {
     return (
       <>
 
-        <div className="jumbotron" style={{ backgroundImage: "url(" + lung + ")", height: '100%', position: 'absolute', width: '100%' }}   >
+        
 
           <ToastContainer autoClose={3000} />
           <Nav auth={this.auth} />
+          <Carousel />
+          <div className="image" >
           <div className="body">
             <Switch>
               <Route path="/" exact render={props => <Home auth={this.auth} {...props} />} />
@@ -39,6 +45,7 @@ class App extends Component {
           </div>
 
         </div>
+        <Footer />
       </>
 
     );

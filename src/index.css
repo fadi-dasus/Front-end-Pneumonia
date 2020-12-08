@@ -51,3 +51,53 @@ nav li a:hover {
 nav button {
   margin-top: 13px;
 }
+.image{
+  background-image: url('./assets/lung.jpg');
+  height: 600px;
+   width: 100%;
+   padding: 2px;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  /* color: white; */
+  text-align: center;
+}
+/* .page-footer{
+  background-color: darkslategrey;
+height: 100px;
+}
+.footer-copyright{
+  background-color: darkslategrey;
+height: 100px;
+} */
+.page-footer.unique-color-dark.page-footer.font-small.pt-0 {
+  background-color: #3d47c9;
+}
+.col-md-3.col-lg-4.col-xl-3.mb-4 {
+  padding-top: 15px;
+}
+.col-md-2.col-lg-2.col-xl-2.mb-4{
+  padding-top: 15px;
+}
+.col-md-3.col-lg-2.col-xl-2.mb-4{
+  padding-top: 15px;
+}
+.col-md-4.col-lg-3.col-xl-3.mb-4{
+  padding-top: 15px;
+}
+.mt-5, .my-5 {
+  margin-top: 0rem!important;
+}
+.mb-4, .my-4 {
+  margin-bottom: 0rem!important;
+}
+.mt-3, .my-3 {
+  margin-top: 0rem!important;
+}

@@ -8,11 +8,11 @@ class Home extends Component {
     return (
       <div>
 
-        {isAuthenticated() ? (
+        {/* {isAuthenticated() ? ( */}
           <Link to="/profile">View profile</Link>
-        ) : (
-            <button className={styles.button} onClick={login}>Log In</button>
-          )}
+        {/* ) : (
+            // <button className={styles.button} onClick={login}>Log In</button>
+          )} */}
       </div>
     );
   }
