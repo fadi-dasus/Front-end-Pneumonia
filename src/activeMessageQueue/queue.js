@@ -1,4 +1,5 @@
 import { ImageReceived } from '../flux/actions/actionCreator'
+import { messageReceivedSuccess } from '../flux/actions/apiStatusActions'
 
 export function subscribeToTheQueue(email) {
     let ws = new WebSocket('ws://localhost:61614', 'stomp')
@@ -15,6 +16,7 @@ function listenToUpcomingMessages(ws) {
             // eslint-disable-next-line no-new-func
             const data = new Function("", "return " + e.data.match(/{[^}]*}/)[0])()
             ImageReceived(data)
+            messageReceivedSuccess()
         }
     }
 }

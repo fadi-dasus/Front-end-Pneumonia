@@ -5,8 +5,7 @@ function ImageList(props) {
 
     return (
         <>
-            <div className="d-flex flex-row"   >
-
+            <div className="d-flex flex-row"  >
                 <table className="table table-striped table-dark" style={{
                     backgroundImage: "url(" + tableLung + ")",
                     marginTop: '50px', marginLeft: '30px', width: '24%', height: '47%', position: 'fixed', overflowY: 'scroll'

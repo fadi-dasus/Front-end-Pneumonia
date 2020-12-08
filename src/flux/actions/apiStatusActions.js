@@ -1,9 +1,17 @@
 import * as types from "./actionTypes";
+import dispatcher from '../appDispatcher'
 
 export function beginApiCall() {
-  return { type: types.BEGIN_API_CALL };
+  dispatcher.dispatch({
+    actionType: types.BEGIN_API_CALL,
+  })
 }
 
-export function apiCallError() {
-  return { type: types.API_CALL_ERROR };
+
+
+
+export function messageReceivedSuccess() {
+  dispatcher.dispatch({
+    actionType: types.MESSAGE_RECEIVED,
+  })
 }

@@ -1,5 +1,5 @@
 
 export const IMAGE_RECEIVED = 'IMAGE_RECEIVED'
 export const BEGIN_API_CALL = 'BEGIN_API_CALL'
-export const API_CALL_ERROR = 'API_CALL_ERROR'
+export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED'
 
