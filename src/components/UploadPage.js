@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useCallback } from "react";
 import { uploadImage, saveImage } from '../api/apiHelper'
 import { subscribeToTheQueue } from '../activeMessageQueue/queue'
 import imagesStore from '../flux/store/imageStore'
@@ -7,7 +7,9 @@ import ImageList from './reusableComponents/ImageList'
 import { useRefresh } from 'react-tidy'
 import { toast } from "react-toastify";
 import spinnerStore from '../flux/store/spinnerStore'
-function UploadPage(props) {
+
+
+const UploadPage = React.memo(function UploadPage(props) {
 
   const renderOptimiser = useRefresh()
   const [initialDiagnosis, setInitialDiagnosis] = useState()
@@ -15,7 +17,7 @@ function UploadPage(props) {
   const [file, setFile] = useState()
   const [spinnerState, setSpinnerState] = useState(false)
   const [images, setImages] = useState(imagesStore.getImages())
-
+ 
   useEffect(() => {
     spinnerStore.addChangeListener(onSpinnerChange)
     setSpinnerState(spinnerStore.getState())
@@ -23,7 +25,6 @@ function UploadPage(props) {
 
   function onSpinnerChange() {
     setSpinnerState(spinnerStore.getState())
-    // renderOptimiser()
   }
 
   useEffect(() => {
@@ -58,12 +59,13 @@ function UploadPage(props) {
     formData.append("file", file)
     handleUploadImage(formData)
   }
-
+  const fieldChangeHandler = useCallback((e) => setInitialDiagnosis(e.target.value), [])
+  const fileChangeHandler = useCallback((e) => setFile(e.target.files[0]), [])
   return (
     <Fragment>
       <Form
-        onInitialDiagnosisChange={(e) => setInitialDiagnosis(e.target.value)}
-        onFileChangeChange={(e) => setFile(e.target.files[0])}
+        onInitialDiagnosisChange={fieldChangeHandler}
+        onFileChangeChange={fileChangeHandler}
         initialDiagnosisValue={initialDiagnosis}
         uploadFormData={uploadFormDataHandler}
         spinnerState={spinnerState} />
@@ -71,7 +73,7 @@ function UploadPage(props) {
     </Fragment>
   );
 }
-
+)
 export default UploadPage;
 
 

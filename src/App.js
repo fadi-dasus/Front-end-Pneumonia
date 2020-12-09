@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
@@ -13,7 +13,7 @@ import NotFoundPage from './components/pages/NotFoundPage'
 
 
 
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.auth = new Auth(this.props.history);

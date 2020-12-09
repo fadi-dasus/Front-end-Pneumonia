@@ -1,7 +1,7 @@
 import React from 'react'
 import Spinner from '../../common/spinner/Spinner'
 
-function Form(props) {
+const Form = React.memo(function Form(props) {
     return (
         <>
             <div className="form-group" style={{ marginTop: '10px' }}>
@@ -17,5 +17,5 @@ function Form(props) {
             </div>
         </>
     )
-}
+})
 export default Form 

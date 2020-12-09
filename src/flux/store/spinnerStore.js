@@ -29,7 +29,7 @@ dispatcher.register(action => {
             break
 
         case actionTypes.MESSAGE_RECEIVED:
-            apiCall = apiCall - 1
+            apiCall--
             spinnerStore.emitChange()
             break
         default:
